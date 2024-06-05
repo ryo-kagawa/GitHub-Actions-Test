@@ -4,15 +4,29 @@ on:
   pull_request:
 
 env:
-  MATRIX_OS: '["ubuntu-latest", "windows-latest", "macos-latest"]'
+  MATRIX_OS: "[\"ubuntu-latest\", \"windows-latest\", \"macos-latest\"]"
   MATRIX_NODE_VERSION: "[18, 20]"
 
 jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      os: ${{ steps.matrix.outputs.os }}
+      node-version: ${{ steps.matrix.outputs.node-version }}
+    steps:
+      - name: make values
+        id: matrix
+        run: |
+          echo "os=$(echo '${{ env.MATRIX_OS }}' | jq -c)" >> $GITHUB_OUTPUT
+          echo "node-version=$(echo '${{ env.MATRIX_NODE_VERSION }}' | jq -c)" >> $GITHUB_OUTPUT
+
   job1:
+    needs:
+      - matrix
     strategy:
       matrix:
-        os:  ${{ fromJson(env.MATRIX_OS) }}
-        node-version: ${{ fromJson(env.MATRIX_NODE_VERSION) }}
+        os: ${{ fromJson(needs.matrix.outputs.os) }}
+        node-version: ${{ fromJson(needs.matrix.outputs.node-version) }}
     name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job1
     runs-on: ${{ matrix.os }}
     steps:
@@ -25,11 +39,12 @@ jobs:
 
   job2:
     needs:
+      - matrix
       - job1
     strategy:
       matrix:
-        os: ${{ fromJson(env.MATRIX_OS) }}
-        node-version: ${{ fromJson(env.MATRIX_NODE_VERSION) }}
+        os: ${{ fromJson(needs.matrix.outputs.os) }}
+        node-version: ${{ fromJson(needs.matrix.outputs.node-version) }}
     name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job2
     runs-on: ${{ matrix.os }}
     steps:
@@ -42,11 +57,12 @@ jobs:
 
   job3:
     needs:
+      - matrix
       - job1
     strategy:
       matrix:
-        os: ${{ fromJson(env.MATRIX_OS) }}
-        node-version: ${{ fromJson(env.MATRIX_NODE_VERSION) }}
+        os: ${{ fromJson(needs.matrix.outputs.os) }}
+        node-version: ${{ fromJson(needs.matrix.outputs.node-version) }}
     name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job3
     runs-on: ${{ matrix.os }}
     steps:
