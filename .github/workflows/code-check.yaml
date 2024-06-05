@@ -1,0 +1,58 @@
+name: Code Check
+
+on:
+  pull_request:
+
+env:
+  MATRIX_OS: '["ubuntu-latest", "windows-latest", "macos-latest"]'
+  MATRIX_NODE_VERSION: "[18, 20]"
+
+jobs:
+  job1:
+    strategy:
+      matrix:
+        os:
+          - ${{ fromJson(env.MATRIX_OS) }}
+        node-version:
+          - ${{ fromJson(env.MATRIX_NODE_VERSION) }}
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job1
+    steps:
+      - name: outputs
+        run: |
+          echo "os: ${{ matrix.os }}"
+          echo "node-version: ${{ matrix.node-version }}"
+
+  job2:
+    needs:
+      - job1
+    strategy:
+      matrix:
+        os:
+          - ${{ fromJson(env.MATRIX_OS) }}
+        node-version:
+          - ${{ fromJson(env.MATRIX_NODE_VERSION) }}
+    name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job2
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: outputs
+        run: |
+          echo "os: ${{ matrix.os }}"
+          echo "node-version: ${{ matrix.node-version }}"
+
+  job3:
+    needs:
+      - job1
+    strategy:
+      matrix:
+        os:
+          - ${{ fromJson(env.MATRIX_OS) }}
+        node-version:
+          - ${{ fromJson(env.MATRIX_NODE_VERSION) }}
+    name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job3
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: outputs
+        run: |
+          echo "os: ${{ matrix.os }}"
+          echo "node-version: ${{ matrix.node-version }}"
