@@ -9,50 +9,59 @@ env:
 
 jobs:
   job1:
-    strategy:
-      matrix:
-        os:
-          - ${{ fromJson(env.MATRIX_OS) }}
-        node-version:
-          - ${{ fromJson(env.MATRIX_NODE_VERSION) }}
-    runs-on: ${{ matrix.os }}
+#    strategy:
+#      matrix:
+#        os:
+#          - ${{ fromJson(env.MATRIX_OS) }}
+#        node-version:
+#          - ${{ fromJson(env.MATRIX_NODE_VERSION) }}
+#    runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job1
+    runs-on: ubuntu-latest
     steps:
       - name: outputs
         run: |
+          echo "MATRIX_OS: ${{ env.MATRIX_OS }}"
+          echo "MATRIX_NODE_VERSION: ${{ env.MATRIX_NODE_VERSION }}"
           echo "os: ${{ matrix.os }}"
           echo "node-version: ${{ matrix.node-version }}"
 
   job2:
     needs:
       - job1
-    strategy:
-      matrix:
-        os:
-          - ${{ fromJson(env.MATRIX_OS) }}
-        node-version:
-          - ${{ fromJson(env.MATRIX_NODE_VERSION) }}
+#    strategy:
+#      matrix:
+#        os:
+#          - ${{ fromJson(env.MATRIX_OS) }}
+#        node-version:
+#          - ${{ fromJson(env.MATRIX_NODE_VERSION) }}
     name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job2
-    runs-on: ${{ matrix.os }}
+#    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: outputs
         run: |
+          echo "MATRIX_OS: ${{ env.MATRIX_OS }}"
+          echo "MATRIX_NODE_VERSION: ${{ env.MATRIX_NODE_VERSION }}"
           echo "os: ${{ matrix.os }}"
           echo "node-version: ${{ matrix.node-version }}"
 
   job3:
     needs:
       - job1
-    strategy:
-      matrix:
-        os:
-          - ${{ fromJson(env.MATRIX_OS) }}
-        node-version:
-          - ${{ fromJson(env.MATRIX_NODE_VERSION) }}
+#    strategy:
+#      matrix:
+#        os:
+#          - ${{ fromJson(env.MATRIX_OS) }}
+#        node-version:
+#          - ${{ fromJson(env.MATRIX_NODE_VERSION) }}
     name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job3
-    runs-on: ${{ matrix.os }}
+#    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: outputs
         run: |
+          echo "MATRIX_OS: ${{ env.MATRIX_OS }}"
+          echo "MATRIX_NODE_VERSION: ${{ env.MATRIX_NODE_VERSION }}"
           echo "os: ${{ matrix.os }}"
           echo "node-version: ${{ matrix.node-version }}"
