@@ -15,7 +15,7 @@ updates:
     directory: "/my-turborepo"
     schedule:
       interval: daily
-      time: "12:30"
+      time: "13:00"
     groups:
       patch:
         patterns:
