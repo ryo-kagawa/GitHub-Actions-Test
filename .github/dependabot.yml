@@ -14,8 +14,8 @@ updates:
   - package-ecosystem: "npm"
     directory: "/my-turborepo"
     schedule:
-      interval: dayly
-      time: "09:00"
+      interval: daily
+      time: "09:30"
     groups:
       patch:
         patterns:
