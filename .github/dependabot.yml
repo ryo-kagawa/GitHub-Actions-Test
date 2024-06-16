@@ -6,7 +6,35 @@
 
 version: 2
 updates:
- - package-ecosystem: "devcontainers"
-   directory: "/"
-   schedule:
-     interval: weekly
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: "npm"
+    directory: "/my-turborepo"
+    schedule:
+      interval: dayly
+      time: "09:00"
+    groups:
+      patch:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+      development-minor:
+        dependency-type: "development"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+      production-minor:
+        dependency-type: "production"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
