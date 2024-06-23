@@ -14,12 +14,18 @@ jobs:
       - name: Update pip
         run: python -m pip install --upgrade pip
 
+      - name: Cache Key
+        id: cache-key-id
+        run: |
+          echo "cache-key=$(python -V | sed 's/ /_/g')-$(pip -V | sed 's/ /_/g')" >> $GITHUB_OUTPUT
+
+
       - name: Cache Dependency
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: $(python -V | sed 's/ /_/g')-$(pip -V | sed 's/ /_/g')
-          restore-keys: $(python -V | sed 's/ /_/g')-$(pip -V | sed 's/ /_/g')
+          key: ${{ steps.cache-key-id.outputs.cache-key }}
+          restore-keys: ${{ steps.cache-key-id.outputs.cache-key }}
 
       - name: Install Dependencies
         run: |
