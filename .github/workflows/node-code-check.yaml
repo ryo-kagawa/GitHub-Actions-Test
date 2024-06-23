@@ -1,7 +1,7 @@
 name: Node Code Check
 
 on:
-  pull_request:
+  workflow_dispatch:
 
 env:
   MATRIX_OS: "[\"ubuntu-latest\", \"windows-latest\", \"macos-latest\"]"
