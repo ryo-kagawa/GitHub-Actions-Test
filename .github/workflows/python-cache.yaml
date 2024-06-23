@@ -23,7 +23,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-        pip install --upgrade openai
-        pip install --upgrade PyGithub
-        pip install --upgrade qdrant-client
-        pip install --upgrade regex
+          pip install --upgrade openai
+          pip install --upgrade PyGithub
+          pip install --upgrade qdrant-client
+          pip install --upgrade regex
