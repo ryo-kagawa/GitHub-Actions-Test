@@ -9,6 +9,6 @@
     "lodash": "^3.0.0"
   },
   "devDependencies": {
-    "jquery": "^2.1.0"
+    "jquery": "^2.2.4"
   }
 }
