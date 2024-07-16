@@ -27,9 +27,9 @@ jobs:
       matrix:
         os: ${{ fromJson(needs.matrix.outputs.os) }}
         node-version: ${{ fromJson(needs.matrix.outputs.node-version) }}
-    name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job1
     runs-on: ${{ matrix.os }}
     steps:
+      - name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job1
       - name: outputs
         run: |
           echo "MATRIX_OS: ${{ env.MATRIX_OS }}"
@@ -45,9 +45,9 @@ jobs:
       matrix:
         os: ${{ fromJson(needs.matrix.outputs.os) }}
         node-version: ${{ fromJson(needs.matrix.outputs.node-version) }}
-    name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job2
     runs-on: ${{ matrix.os }}
     steps:
+      - name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job2
       - name: outputs
         run: |
           echo "MATRIX_OS: ${{ env.MATRIX_OS }}"
@@ -63,9 +63,9 @@ jobs:
       matrix:
         os: ${{ fromJson(needs.matrix.outputs.os) }}
         node-version: ${{ fromJson(needs.matrix.outputs.node-version) }}
-    name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job3
     runs-on: ${{ matrix.os }}
     steps:
+      - name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job3
       - name: outputs
         run: |
           echo "MATRIX_OS: ${{ env.MATRIX_OS }}"
