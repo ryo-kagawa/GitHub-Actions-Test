@@ -7,8 +7,5 @@
   "description": "",
   "dependencies": {
     "lodash": "^3.0.0"
-  },
-  "devDependencies": {
-    "jquery": "^2.1.0"
   }
 }
