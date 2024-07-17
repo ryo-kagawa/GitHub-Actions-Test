@@ -27,9 +27,10 @@ jobs:
       matrix:
         os: ${{ fromJson(needs.matrix.outputs.os) }}
         node-version: ${{ fromJson(needs.matrix.outputs.node-version) }}
-    name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job1
     runs-on: ${{ matrix.os }}
     steps:
+      - name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job1
+        run: echo ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job1
       - name: outputs
         run: |
           echo "MATRIX_OS: ${{ env.MATRIX_OS }}"
@@ -45,9 +46,10 @@ jobs:
       matrix:
         os: ${{ fromJson(needs.matrix.outputs.os) }}
         node-version: ${{ fromJson(needs.matrix.outputs.node-version) }}
-    name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job2
     runs-on: ${{ matrix.os }}
     steps:
+      - name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job2
+        run: echo ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job2
       - name: outputs
         run: |
           echo "MATRIX_OS: ${{ env.MATRIX_OS }}"
@@ -63,12 +65,24 @@ jobs:
       matrix:
         os: ${{ fromJson(needs.matrix.outputs.os) }}
         node-version: ${{ fromJson(needs.matrix.outputs.node-version) }}
-    name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job3
     runs-on: ${{ matrix.os }}
     steps:
+      - name: ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job3
+        run: echo ${{ matrix.os }} Node.js ${{ matrix.node-version }} Job3
       - name: outputs
         run: |
           echo "MATRIX_OS: ${{ env.MATRIX_OS }}"
           echo "MATRIX_NODE_VERSION: ${{ env.MATRIX_NODE_VERSION }}"
           echo "os: ${{ matrix.os }}"
           echo "node-version: ${{ matrix.node-version }}"
+
+  node-code-check-finish:
+    if: ${{ always() }}
+    needs:
+      - job1
+      - job2
+      - job3
+    runs-on: ubuntu-latest
+    steps:
+      - if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        run: exit 1
