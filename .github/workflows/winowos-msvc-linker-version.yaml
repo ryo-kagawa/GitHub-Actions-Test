@@ -1,0 +1,12 @@
+name: Windows MSVC Linker Version
+
+on:
+  workflow_dispatch:
+
+jobs:
+  native:
+    runs-on: windows-latest
+    step:
+      - run: |
+          $linker = Get-ChildItem "C:\Program Files*\Microsoft Visual Studio\*\VC\Tools\MSVC\*\bin\Hostx64\x64\link.exe" | Sort-Object LastWriteTime -Desc | Select-Object -First 1
+          echo "リンカーバージョン: $($linker.VersionInfo.ProductVersion)"
