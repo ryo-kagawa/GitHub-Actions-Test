@@ -1,0 +1,13 @@
+name: Pull Request Open Trigger
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  pull_request_opened:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "${{ toJSON(github.event.pull_request.assignees) }}"
