@@ -8,9 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: cross-platform-actions/action@0.4.2
+      - uses: cross-platform-actions/action@v0.32.0
         with:
-          os: freebsd:15.0
+          ooperating_systems: freebsd
+          version: '15.0'
+          architecture: x86-64
           run: |
             cd /usr/local &&
             fetch https://go.dev/dl/go1.26.0.freebsd-amd64.tar.gz &&
