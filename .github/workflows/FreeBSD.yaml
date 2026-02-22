@@ -8,16 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: docker/setup-qemu-action@v3
-        with:
-          platforms: linux/amd64
       - run: |
           docker run -v $(pwd):/workspace -w /workspace freebsd/freebsd-runtime:15.0 \
             sh -c "
             cd /usr/local &&
             fetch https://go.dev/dl/go1.26.0.freebsd-amd64.tar.gz &&
-            tar -xzf go1.22.8.freebsd-amd64.tar.gz &&
+            tar -xzf go1.26.0.freebsd-amd64.tar.gz &&
             cd /workspace/Go &&
             /usr/local/go/bin/go mod download &&
-            /usr/local/go/bin/go test
+            /usr/local/go/bin/go test ./...
+            /usr/local/go/bin/go vet ./...
             "
