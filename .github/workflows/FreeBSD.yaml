@@ -14,10 +14,11 @@ jobs:
           version: '15.0'
           architecture: x86-64
           run: |
-            cd /usr/local &&
-            fetch --no-verify-peer https://go.dev/dl/go1.26.0.freebsd-amd64.tar.gz &&
-            tar -C /usr/local -xzf go1.26.0.linux-amd64.tar.gz
+            cd /tmp &&
+            fetch https://go.dev/dl/go1.26.0.freebsd-amd64.tar.gz &&
+            tar -xzf go1.26.0.linux-amd64.tar.gz
+            export PATH=$PATH:/tmp/go/bin &&
             cd /workspace/Go &&
-            /usr/local/go/bin/go mod download &&
-            /usr/local/go/bin/go test ./... &&
-            /usr/local/go/bin/go vet ./...
+            go mod download &&
+            go test ./... &&
+            go vet ./...
