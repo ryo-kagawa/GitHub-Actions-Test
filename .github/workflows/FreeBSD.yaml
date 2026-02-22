@@ -16,8 +16,8 @@ jobs:
           run: |
             cd /usr/local &&
             fetch https://go.dev/dl/go1.26.0.freebsd-amd64.tar.gz &&
-            tar -xzf go1.26.0.freebsd-amd64.tar.gz &&
+            tar -C /usr/local -xzf go1.26.0.linux-amd64.tar.gz
             cd /workspace/Go &&
             /usr/local/go/bin/go mod download &&
-            /usr/local/go/bin/go test ./...
+            /usr/local/go/bin/go test ./... &&
             /usr/local/go/bin/go vet ./...
