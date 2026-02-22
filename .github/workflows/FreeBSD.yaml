@@ -18,7 +18,7 @@ jobs:
             fetch https://go.dev/dl/go1.26.0.freebsd-amd64.tar.gz &&
             tar -xzf go1.26.0.freebsd-amd64.tar.gz
             export PATH=$PATH:/tmp/go/bin &&
-            cd /workspace/Go &&
+            cd ${GITHUB_WORKSPACE}/Go &&
             go mod download &&
             go test ./... &&
             go vet ./...
