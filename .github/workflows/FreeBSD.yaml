@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: cross-platform-actions/action@v0.32.0
         with:
-          ooperating_systems: freebsd
+          operating_system: freebsd
           version: '15.0'
           architecture: x86-64
           run: |
