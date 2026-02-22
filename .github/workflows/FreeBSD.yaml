@@ -12,7 +12,7 @@ jobs:
         with:
           platforms: linux/amd64
       - run: |
-          docker run --platform ${{ matrix.qemu-platform }} -v $(pwd):/workspace -w /workspace ${{ matrix.docker-image }} freebsd/freebsd-runtime \
+          docker run -v $(pwd):/workspace -w /workspace freebsd/freebsd-runtime \
             sh -c "
             cd /usr/local &&
             fetch https://go.dev/dl/go1.26.0.freebsd-amd64.tar.gz &&
@@ -20,4 +20,4 @@ jobs:
             cd /workspace/Go &&
             /usr/local/go/bin/go mod download &&
             /usr/local/go/bin/go test
-          "
+            "
