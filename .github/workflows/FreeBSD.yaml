@@ -8,9 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - run: |
-          docker run -v $(pwd):/workspace -w /workspace freebsd/freebsd-runtime:15.0 \
-            sh -c "
+      - uses: cross-platform-actions/action@v0.4.2
+        with:
+          os: freebsd:15.0
+          run: |
             cd /usr/local &&
             fetch https://go.dev/dl/go1.26.0.freebsd-amd64.tar.gz &&
             tar -xzf go1.26.0.freebsd-amd64.tar.gz &&
@@ -18,4 +19,3 @@ jobs:
             /usr/local/go/bin/go mod download &&
             /usr/local/go/bin/go test ./...
             /usr/local/go/bin/go vet ./...
-            "
