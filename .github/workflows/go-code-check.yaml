@@ -79,6 +79,7 @@ jobs:
           operating_system: freebsd
           version: ${{ matrix.target.version }}
           architecture: ${{ matrix.target.cpu-architecture }}
+          shell: bash
           run: |
             cd /tmp &&
             fetch https://go.dev/dl/${{ matrix.target.go-filename }} &&
