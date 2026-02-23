@@ -1,23 +1,33 @@
-name: FreeBSD Go Test
+name: Go Code Check
 
 on:
   workflow_dispatch:
 
 jobs:
-  code-check-1.22-github-hosted:
+  github-hosted:
     strategy:
       matrix:
-        os:
-          - macos-15-intel
-          - macos-14
-          - macos-15
-          - macos-26
-          - ubuntu-latest
-          - ubuntu-24.04-arm
-          - windows-2022
-          - windows-2025
-          - windows-11-arm
-    runs-on: ${{ matrix.os }}
+        target:
+          - runner: macos-15-intel
+            name: macOS 15 AMD64
+          - runner: macos-14
+            name: macOS 14 ARM64
+          - runner: macos-15
+            name: macOS 15 ARM64
+          - runner: macos-26
+            name: macOS 26 ARM64
+          - runner: ubuntu-latest
+            name: Linux AMD64
+          - runner: ubuntu-24.04-arm
+            name: Linux ARM64
+          - runner: windows-2022
+            name: Widnows Server 2022 AMD64
+          - runner: windows-2025
+            name: Widnows Server 2025 AMD64
+          - runner: windows-11-arm
+            name: Widnows 11 ARM64
+    runs-on: ${{ matrix.target.runner }}
+    name: ${{ matrix.target.name }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-go@v6
@@ -28,54 +38,55 @@ jobs:
       - name: vet
         run: go vet ./...
 
-  code-check-1.22-FreeBSD:
+  FreeBSD:
     strategy:
       matrix:
-        os:
-          - base-os: ubuntu-latest
+        target:
+          - runner: ubuntu-latest
             cpu-architecture: x86-64
             version: '12.4'
             go-filename: go1.22.12.freebsd-amd64.tar.gz
-          - base-os: ubuntu-latest
+          - runner: ubuntu-latest
             cpu-architecture: x86-64
             version: '13.5'
             go-filename: go1.22.12.freebsd-amd64.tar.gz
-          - base-os: ubuntu-latest
+          - runner: ubuntu-latest
             cpu-architecture: x86-64
             version: '14.3'
             go-filename: go1.22.12.freebsd-amd64.tar.gz
-          - base-os: ubuntu-latest
+          - runner: ubuntu-latest
             cpu-architecture: x86-64
             version: '15.0'
             go-filename: go1.22.12.freebsd-amd64.tar.gz
-          - base-os: ubuntu-24.04-arm
+          - runner: ubuntu-24.04-arm
             cpu-architecture: arm64
             version: '12.4'
             go-filename: go1.22.12.freebsd-arm64.tar.gz
-          - base-os: ubuntu-24.04-arm
+          - runner: ubuntu-24.04-arm
             cpu-architecture: arm64
             version: '13.5'
             go-filename: go1.22.12.freebsd-arm64.tar.gz
-          - base-os: ubuntu-24.04-arm
+          - runner: ubuntu-24.04-arm
             cpu-architecture: arm64
             version: '14.3'
             go-filename: go1.22.12.freebsd-arm64.tar.gz
-          - base-os: ubuntu-24.04-arm
+          - runner: ubuntu-24.04-arm
             cpu-architecture: arm64
             version: '15.0'
             go-filename: go1.22.12.freebsd-arm64.tar.gz
-    runs-on: ${{ matrix.base-os }}
+    name: FreeBSD ${{ matrix.target.version }} ${{ matrix.target.cpu-architecture }}
+    runs-on: ${{ matrix.target.runner }}
     steps:
       - uses: actions/checkout@v6
       - uses: cross-platform-actions/action@v0.32.0
         with:
           operating_system: freebsd
-          version: ${{ matrix.version }}
-          architecture: ${{ matrix.cpu-architecture }}
+          version: ${{ matrix.target.version }}
+          architecture: ${{ matrix.target.cpu-architecture }}
           run: |
             cd /tmp &&
-            fetch https://go.dev/dl/${{ matrix.go-filename }} &&
-            tar -xzf ${{ matrix.go-filename }} &&
+            fetch https://go.dev/dl/${{ matrix.target.go-filename }} &&
+            tar -xzf ${{ matrix.target.go-filename }} &&
             export PATH=$PATH:/tmp/go/bin &&
             cd ${GITHUB_WORKSPACE}/Go &&
             go mod download &&
