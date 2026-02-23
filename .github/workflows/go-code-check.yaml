@@ -3,6 +3,10 @@ name: Go Code Check
 on:
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: Go
+
 jobs:
   github-hosted:
     strategy:
@@ -42,40 +46,32 @@ jobs:
     strategy:
       matrix:
         target:
-          - runner: ubuntu-latest
-            cpu-architecture: x86-64
+          - cpu-architecture: x86-64
             version: '12.4'
             go-filename: go1.22.12.freebsd-amd64.tar.gz
-          - runner: ubuntu-latest
-            cpu-architecture: x86-64
+          - cpu-architecture: x86-64
             version: '13.5'
             go-filename: go1.22.12.freebsd-amd64.tar.gz
-          - runner: ubuntu-latest
-            cpu-architecture: x86-64
+          - cpu-architecture: x86-64
             version: '14.3'
             go-filename: go1.22.12.freebsd-amd64.tar.gz
-          - runner: ubuntu-latest
-            cpu-architecture: x86-64
+          - cpu-architecture: x86-64
             version: '15.0'
             go-filename: go1.22.12.freebsd-amd64.tar.gz
-          - runner: ubuntu-24.04-arm
-            cpu-architecture: arm64
+          - cpu-architecture: arm64
             version: '12.4'
             go-filename: go1.22.12.freebsd-arm64.tar.gz
-          - runner: ubuntu-24.04-arm
-            cpu-architecture: arm64
+          - cpu-architecture: arm64
             version: '13.5'
             go-filename: go1.22.12.freebsd-arm64.tar.gz
-          - runner: ubuntu-24.04-arm
-            cpu-architecture: arm64
+          - cpu-architecture: arm64
             version: '14.3'
             go-filename: go1.22.12.freebsd-arm64.tar.gz
-          - runner: ubuntu-24.04-arm
-            cpu-architecture: arm64
+          - cpu-architecture: arm64
             version: '15.0'
             go-filename: go1.22.12.freebsd-arm64.tar.gz
     name: FreeBSD ${{ matrix.target.version }} ${{ matrix.target.cpu-architecture }}
-    runs-on: ${{ matrix.target.runner }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - uses: cross-platform-actions/action@v0.32.0
