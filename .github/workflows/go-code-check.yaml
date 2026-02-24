@@ -79,7 +79,7 @@ jobs:
           shell: bash
           run: |
             cd ${GITHUB_WORKSPACE}/Go/tmp &&
-            tar -xzf go${{ env.GO_VERSION }}.freebsd-arm64.tar.gz &&
+            tar -xzf go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz &&
             export PATH=$PATH:${GITHUB_WORKSPACE}/Go/tmp/go/bin &&
             cd ${GITHUB_WORKSPACE}/Go &&
             go test ./... &&
