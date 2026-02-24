@@ -111,7 +111,6 @@ jobs:
             tar -xzf go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz &&
             export PATH=$PATH:/tmp/go/bin &&
             cd ${GITHUB_WORKSPACE}/Go &&
-            go mod download &&
             go test ./... &&
             go vet ./...
 
