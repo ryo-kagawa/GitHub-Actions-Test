@@ -85,7 +85,7 @@ jobs:
             go test ./... &&
             go vet ./...
 
-  freebsd-amd64:
+  freebsd-amd64-old:
     strategy:
       fail-fast: false
       matrix:
