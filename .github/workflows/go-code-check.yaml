@@ -78,8 +78,7 @@ jobs:
           sync_files: runner-to-vm
           shell: bash
           run: |
-            cd ${GITHUB_WORKSPACE}/Go/tmp &&
-            tar -xzf go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz &&
+            tar -xzf ${GITHUB_WORKSPACE}/Go/tmp/go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz -C /tmp &&
             export PATH=$PATH:${GITHUB_WORKSPACE}/Go/tmp/go/bin &&
             cd ${GITHUB_WORKSPACE}/Go &&
             go version &&
