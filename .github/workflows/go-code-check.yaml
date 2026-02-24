@@ -63,7 +63,7 @@ jobs:
       - id: cache
         uses: actions/cache@v5
         with:
-          path: ${GITHUB_WORKSPACE}/Go/tmp/go
+          path: ${{ GITHUB_WORKSPACE }}/Go/tmp/go
           key: go${{ env.GO_VERSION }}.freebsd-amd64
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
@@ -80,9 +80,9 @@ jobs:
           sync_files: runner-to-vm
           shell: bash
           run: |
-            mv ${GITHUB_WORKSPACE}/Go/tmp/go /tmp/go
+            mv ${{ GITHUB_WORKSPACE }}/Go/tmp/go /tmp/go
             export PATH=$PATH:/tmp/go/bin &&
-            cd ${GITHUB_WORKSPACE}/Go &&
+            cd ${{ GITHUB_WORKSPACE }}/Go &&
             go version &&
             go test ./... &&
             go vet ./...
