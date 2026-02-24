@@ -64,12 +64,14 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ${GITHUB_WORKSPACE}/Go/tmp/go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz
-          key: go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz
+          key: go${{ env.GO_VERSION }}.freebsd-amd64
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           mkdir tmp
           cd tmp
           curl --location --output go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz
+          tar -xzf go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz
+          rm go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz
       - uses: cross-platform-actions/action@v0.32.0
         with:
           operating_system: freebsd
@@ -78,39 +80,10 @@ jobs:
           sync_files: runner-to-vm
           shell: bash
           run: |
-            tar -xzf ${GITHUB_WORKSPACE}/Go/tmp/go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz -C /tmp &&
+            mv ${GITHUB_WORKSPACE}/Go/tmp/go /tmp/go
             export PATH=$PATH:/tmp/go/bin &&
             cd ${GITHUB_WORKSPACE}/Go &&
             go version &&
-            go test ./... &&
-            go vet ./...
-
-  freebsd-amd64-old:
-    strategy:
-      fail-fast: false
-      matrix:
-        version:
-          - '12.4'
-          # - '13.5'
-          # - '14.3'
-          - '15.0'
-    name: freebsd/amd64(FreeBSD ${{ matrix.version }})
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: cross-platform-actions/action@v0.32.0
-        with:
-          operating_system: freebsd
-          version: ${{ matrix.version }}
-          architecture: x86-64
-          sync_files: runner-to-vm
-          shell: bash
-          run: |
-            cd /tmp &&
-            fetch https://go.dev/dl/go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz &&
-            tar -xzf go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz &&
-            export PATH=$PATH:/tmp/go/bin &&
-            cd ${GITHUB_WORKSPACE}/Go &&
             go test ./... &&
             go vet ./...
 
