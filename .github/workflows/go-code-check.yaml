@@ -67,7 +67,7 @@ jobs:
           key: go${{ env.GO_VERSION }}.freebsd-amd64
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          curl https://go.dev/dl/go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz | tar -xz
+          curl https://go.dev/dl/go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz | tar -x
       - uses: cross-platform-actions/action@v0.32.0
         with:
           operating_system: freebsd
