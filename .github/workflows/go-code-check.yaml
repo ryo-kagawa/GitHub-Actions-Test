@@ -63,7 +63,7 @@ jobs:
       - id: cache
         uses: actions/cache@v5
         with:
-          path: ${GITHUB_WORKSPACE}/Go/tmp/go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz
+          path: ${GITHUB_WORKSPACE}/Go/tmp/go
           key: go${{ env.GO_VERSION }}.freebsd-amd64
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
