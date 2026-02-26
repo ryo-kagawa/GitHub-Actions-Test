@@ -201,15 +201,11 @@ jobs:
       - id: cache
         uses: actions/cache@v5
         with:
-          path: ${{ github.workspace }}/tmp/go
+          path: /tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          mkdir tmp
-          cd tmp
-          curl --location --output go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
-          tar -xzf go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
-          rm go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+          curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz | tar -xzf - -C /tmp
       - uses: docker/setup-qemu-action@v3
         with:
           platforms: ${{ env.PLATFORM }}
@@ -217,11 +213,12 @@ jobs:
           docker run \
             --rm \
             -v $(pwd):/workspace \
+            -v /tmp/go:/tmp/go \
             -w /workspace \
             --platform ${{ env.PLATFORM }} \
             ${{ matrix.target.image }} \
             sh -c "
-              export PATH=$PATH:/workspace/tmp/go/bin &&
+              export PATH=$PATH:/tmp/go/bin &&
               ls -al &&
               go vet ./... &&
               go test -p 1 -parallel 1 ./...
