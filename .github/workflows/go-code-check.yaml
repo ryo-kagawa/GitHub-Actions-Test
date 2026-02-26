@@ -223,7 +223,7 @@ jobs:
             sh -c "
               export PATH=$PATH:/workspace/tmp/go/bin &&
               go vet ./... &&
-              go test ./...
+              go test -p 1 -parallel 1 ./...
             "
 
   # linux-arm64:
