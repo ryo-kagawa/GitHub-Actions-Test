@@ -222,6 +222,7 @@ jobs:
             ${{ matrix.target.image }} \
             sh -c "
               export PATH=$PATH:/workspace/tmp/go/bin &&
+              ls -al &&
               go vet ./... &&
               go test -p 1 -parallel 1 ./...
             "
