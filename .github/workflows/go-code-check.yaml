@@ -221,7 +221,8 @@ jobs:
               export PATH=$PATH:/tmp/go/bin &&
               ls -al &&
               go vet ./... &&
-              go test -p 1 -parallel 1 ./...
+              go test ./... &&
+              GO386=softfloat go test ./...
             "
 
   # linux-arm64:
