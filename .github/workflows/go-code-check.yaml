@@ -12,8 +12,18 @@ defaults:
 
 jobs:
   # darwin-amd64:
-  #   name: darwin/amd64(macOS 15)
-  #   runs-on: macos-15-intel
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       target:
+  #         # - runner: macos-14-large
+  #         #   name: darwin/arm64(macOS 14)
+  #         - runner: macos-15-intel
+  #           name: darwin/arm64(macOS 15)
+  #         # - runner: macos-26-large
+  #         #   name: darwin/arm64(macOS 26)
+  #   name: ${{ matrix.target.name }}
+  #   runs-on: ${{ matrix.target.runner }}
   #   steps:
   #     - uses: actions/checkout@v6
   #     - uses: actions/setup-go@v6
@@ -47,45 +57,57 @@ jobs:
   #     - name: vet
   #       run: go vet ./...
 
-  freebsd-amd64:
-    strategy:
-      fail-fast: false
-      matrix:
-        version:
-          - '12.4'
-          # - '13.5'
-          # - '14.3'
-          - '15.0'
-    name: freebsd/amd64(FreeBSD ${{ matrix.version }})
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - id: cache
-        uses: actions/cache@v5
-        with:
-          path: ${{ github.workspace }}/Go/tmp/go
-          key: go${{ env.GO_VERSION }}.freebsd-amd64
-      - if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          mkdir tmp
-          cd tmp
-          curl --location --output go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz
-          tar -xzf go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz
-          rm go${{ env.GO_VERSION }}.freebsd-amd64.tar.gz
-      - uses: cross-platform-actions/action@v0.32.0
-        with:
-          operating_system: freebsd
-          version: ${{ matrix.version }}
-          architecture: x86-64
-          sync_files: runner-to-vm
-          shell: bash
-          run: |
-            mv ${{ github.workspace }}/Go/tmp/go /tmp/go
-            export PATH=$PATH:/tmp/go/bin &&
-            cd ${{ github.workspace }}/Go &&
-            go version &&
-            go test ./... &&
-            go vet ./...
+  # freebsd-amd64:
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       version:
+  #         - '12.2'
+  #         - '12.4'
+  #         - '13.0'
+  #         - '13.1'
+  #         - '13.2'
+  #         - '13.3'
+  #         - '13.4'
+  #         - '13.5'
+  #         - '14.0'
+  #         - '14.1'
+  #         - '14.2'
+  #         - '14.3'
+  #         - '15.0'
+  #   name: freebsd/amd64(FreeBSD ${{ matrix.version }})
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     GOOS: freebsd
+  #     GOARCH: amd64
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - id: cache
+  #       uses: actions/cache@v5
+  #       with:
+  #         path: ${{ github.workspace }}/tmp/go
+  #         key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
+  #     - if: steps.cache.outputs.cache-hit != 'true'
+  #       run: |
+  #         mkdir tmp
+  #         cd tmp
+  #         curl --location --output go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         tar -xzf go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         rm go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #     - uses: cross-platform-actions/action@v0.32.0
+  #       with:
+  #         operating_system: freebsd
+  #         version: ${{ matrix.version }}
+  #         architecture: x86-64
+  #         cpu_count: 4
+  #         sync_files: runner-to-vm
+  #         shell: bash
+  #         run: |
+  #           mv ${{ github.workspace }}/Go/tmp/go /tmp/go
+  #           export PATH=$PATH:/tmp/go/bin &&
+  #           cd ${{ github.workspace }}Go/ &&
+  #           go test -p 1 -parallel 1 ./... &&
+  #           go vet ./...
 
   # freebsd-arm64:
   #   strategy:
@@ -93,33 +115,62 @@ jobs:
   #     matrix:
   #       version:
   #         - '12.4'
+  #         - '13.0'
+  #         - '13.1'
+  #         - '13.2'
+  #         - '13.3'
+  #         - '13.4'
   #         - '13.5'
+  #         - '14.0'
+  #         - '14.1'
+  #         - '14.2'
   #         - '14.3'
   #         - '15.0'
   #   name: freebsd/arm64(FreeBSD ${{ matrix.version }})
   #   runs-on: ubuntu-latest
+  #   env:
+  #     GOOS: freebsd
+  #     GOARCH: arm64
   #   steps:
   #     - uses: actions/checkout@v6
+  #     - id: cache
+  #       uses: actions/cache@v5
+  #       with:
+  #         path: ${{ github.workspace }}/tmp/go
+  #         key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
+  #     - if: steps.cache.outputs.cache-hit != 'true'
+  #       run: |
+  #         mkdir tmp
+  #         cd tmp
+  #         curl --location --output go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         tar -xzf go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         rm go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
   #     - uses: cross-platform-actions/action@v0.32.0
   #       with:
   #         operating_system: freebsd
   #         version: ${{ matrix.version }}
   #         architecture: arm64
+  #         cpu_count: 4
   #         sync_files: runner-to-vm
   #         shell: bash
   #         run: |
-  #           cd /tmp &&
-  #           fetch https://go.dev/dl/go${{ env.GO_VERSION }}.freebsd-arm64.tar.gz &&
-  #           tar -xzf go${{ env.GO_VERSION }}.freebsd-arm64.tar.gz &&
+  #           mv ${{ github.workspace }}/Go/tmp/go /tmp/go
   #           export PATH=$PATH:/tmp/go/bin &&
-  #           cd ${GITHUB_WORKSPACE}/Go &&
-  #           go mod download &&
-  #           go test ./... &&
+  #           cd ${{ github.workspace }}Go/ &&
+  #           go test -p 1 -parallel 1 ./... &&
   #           go vet ./...
 
   # linux-amd64:
-  #   name: linux/amd64
-  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       target:
+  #         - runner: ubuntu-22.04
+  #           name: linux/amd64(Ubuntu 22.04)
+  #         - runner: ubuntu-24.04
+  #           name: linux/amd64(Ubuntu 24.04)
+  #   name: ${{ matrix.target.name }}
+  #   runs-on: ${{ matrix.target.runner }}
   #   steps:
   #     - uses: actions/checkout@v6
   #     - uses: actions/setup-go@v6
@@ -130,9 +181,62 @@ jobs:
   #     - name: vet
   #       run: go vet ./...
 
+  linux-386:
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - image: debian:bookworm-slim
+            name: linux/386(Debian bookworm)
+          - image: debian:trixie-slim
+            name: linux/386(Debian trixie)
+    name: ${{ matrix.target.name }}
+    runs-on: ubuntu-latest
+    env:
+      GOOS: linux
+      GOARCH: 386
+      PLATFORM: linux/386
+    steps:
+      - uses: actions/checkout@v6
+      - id: cache
+        uses: actions/cache@v5
+        with:
+          path: ${{ github.workspace }}/tmp/go
+          key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir tmp
+          cd tmp
+          curl --location --output go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+          tar -xzf go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+          rm go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ env.PLATFORM }}
+      - run: |
+          docker run \
+            --rm \
+            -v $(pwd):/workspace \
+            -w /workspace \
+            --platform ${{ env.PLATFORM }} \
+            ${{ matrix.target.image }} \
+            sh -c "
+              export PATH=$PATH:/workspace/tmp/go/bin &&
+              go vet ./... &&
+              go test ./...
+            "
+
   # linux-arm64:
-  #   name: linux/arm64
-  #   runs-on: ubuntu-24.04-arm
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       target:
+  #         - runner: ubuntu-22.04-arm
+  #           name: linux/arm64(Ubuntu 22.04)
+  #         - runner: ubuntu-24.04-arm
+  #           name: linux/arm64(Ubuntu 24.04)
+  #   name: ${{ matrix.target.name }}
+  #   runs-on: ${{ matrix.target.runner }}
   #   steps:
   #     - uses: actions/checkout@v6
   #     - uses: actions/setup-go@v6
@@ -154,24 +258,37 @@ jobs:
   #         - '10.0'
   #         - '10.1'
   #   name: netbsd/amd64(NetBSD ${{ matrix.version }})
+  #   env:
+  #     GOOS: netbsd
+  #     GOARCH: amd64
   #   runs-on: ubuntu-latest
   #   steps:
   #     - uses: actions/checkout@v6
+  #     - id: cache
+  #       uses: actions/cache@v5
+  #       with:
+  #         path: ${{ github.workspace }}/tmp/go
+  #         key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
+  #     - if: steps.cache.outputs.cache-hit != 'true'
+  #       run: |
+  #         mkdir tmp
+  #         cd tmp
+  #         curl --location --output go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         tar -xzf go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         rm go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
   #     - uses: cross-platform-actions/action@v0.32.0
   #       with:
   #         operating_system: netbsd
   #         version: ${{ matrix.version }}
   #         architecture: x86-64
+  #         cpu_count: 4
   #         sync_files: runner-to-vm
   #         shell: bash
   #         run: |
-  #           cd /tmp &&
-  #           ftp -o go${{ env.GO_VERSION }}.netbsd-amd64.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.netbsd-amd64.tar.gz &&
-  #           tar -xzf go${{ env.GO_VERSION }}.netbsd-amd64.tar.gz &&
+  #           mv ${{ github.workspace }}/Go/tmp/go /tmp/go
   #           export PATH=$PATH:/tmp/go/bin &&
-  #           cd ${GITHUB_WORKSPACE}/Go &&
-  #           go mod download &&
-  #           go test ./... &&
+  #           cd ${{ github.workspace }}Go/ &&
+  #           go test -p 1 -parallel 1 ./... &&
   #           go vet ./...
 
   # netbsd-arm64:
@@ -183,23 +300,36 @@ jobs:
   #         - '10.1'
   #   name: netbsd/arm64(NetBSD ${{ matrix.version }})
   #   runs-on: ubuntu-latest
+  #   env:
+  #     GOOS: netbsd
+  #     GOARCH: arm64
   #   steps:
   #     - uses: actions/checkout@v6
+  #     - id: cache
+  #       uses: actions/cache@v5
+  #       with:
+  #         path: ${{ github.workspace }}/tmp/go
+  #         key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
+  #     - if: steps.cache.outputs.cache-hit != 'true'
+  #       run: |
+  #         mkdir tmp
+  #         cd tmp
+  #         curl --location --output go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         tar -xzf go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         rm go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
   #     - uses: cross-platform-actions/action@v0.32.0
   #       with:
   #         operating_system: netbsd
   #         version: ${{ matrix.version }}
   #         architecture: arm64
+  #         cpu_count: 4
   #         sync_files: runner-to-vm
   #         shell: bash
   #         run: |
-  #           cd /tmp &&
-  #           ftp -o go${{ env.GO_VERSION }}.netbsd-arm64.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.netbsd-arm64.tar.gz &&
-  #           tar -xzf go${{ env.GO_VERSION }}.netbsd-arm64.tar.gz &&
+  #           mv ${{ github.workspace }}/Go/tmp/go /tmp/go
   #           export PATH=$PATH:/tmp/go/bin &&
-  #           cd ${GITHUB_WORKSPACE}/Go &&
-  #           go mod download &&
-  #           go test ./... &&
+  #           cd ${{ github.workspace }}Go/ &&
+  #           go test -p 1 -parallel 1 ./... &&
   #           go vet ./...
 
   # openbsd-amd64:
@@ -219,23 +349,36 @@ jobs:
   #         - '7.8'
   #   name: openbsd/amd64(OpenBSD ${{ matrix.version }})
   #   runs-on: ubuntu-latest
+  #   env:
+  #     GOOS: openbsd
+  #     GOARCH: amd64
   #   steps:
   #     - uses: actions/checkout@v6
+  #     - id: cache
+  #       uses: actions/cache@v5
+  #       with:
+  #         path: ${{ github.workspace }}/tmp/go
+  #         key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
+  #     - if: steps.cache.outputs.cache-hit != 'true'
+  #       run: |
+  #         mkdir tmp
+  #         cd tmp
+  #         curl --location --output go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         tar -xzf go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         rm go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
   #     - uses: cross-platform-actions/action@v0.32.0
   #       with:
   #         operating_system: openbsd
   #         version: ${{ matrix.version }}
   #         architecture: x86-64
+  #         cpu_count: 4
   #         sync_files: runner-to-vm
   #         shell: bash
   #         run: |
-  #           cd /tmp &&
-  #           ftp -o go${{ env.GO_VERSION }}.openbsd-amd64.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.openbsd-amd64.tar.gz &&
-  #           tar -xzf go${{ env.GO_VERSION }}.openbsd-amd64.tar.gz &&
+  #           mv ${{ github.workspace }}/Go/tmp/go /tmp/go
   #           export PATH=$PATH:/tmp/go/bin &&
-  #           cd ${GITHUB_WORKSPACE}/Go &&
-  #           go mod download &&
-  #           go test ./... &&
+  #           cd ${{ github.workspace }}Go/ &&
+  #           go test -p 1 -parallel 1 ./... &&
   #           go vet ./...
 
   # openbsd-arm64:
@@ -254,23 +397,36 @@ jobs:
   #         - '7.8'
   #   name: openbsd/arm64(OpenBSD ${{ matrix.version }})
   #   runs-on: ubuntu-latest
+  #   env:
+  #     GOOS: openbsd
+  #     GOARCH: arm64
   #   steps:
   #     - uses: actions/checkout@v6
+  #     - id: cache
+  #       uses: actions/cache@v5
+  #       with:
+  #         path: ${{ github.workspace }}/tmp/go
+  #         key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
+  #     - if: steps.cache.outputs.cache-hit != 'true'
+  #       run: |
+  #         mkdir tmp
+  #         cd tmp
+  #         curl --location --output go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         tar -xzf go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
+  #         rm go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz
   #     - uses: cross-platform-actions/action@v0.32.0
   #       with:
   #         operating_system: openbsd
   #         version: ${{ matrix.version }}
   #         architecture: arm64
+  #         cpu_count: 4
   #         sync_files: runner-to-vm
   #         shell: bash
   #         run: |
-  #           cd /tmp &&
-  #           ftp -o go${{ env.GO_VERSION }}.openbsd-arm64.tar.gz https://go.dev/dl/go${{ env.GO_VERSION }}.openbsd-arm64.tar.gz &&
-  #           tar -xzf go${{ env.GO_VERSION }}.openbsd-arm64.tar.gz &&
+  #           mv ${{ github.workspace }}/Go/tmp/go /tmp/go
   #           export PATH=$PATH:/tmp/go/bin &&
-  #           cd ${GITHUB_WORKSPACE}/Go &&
-  #           go mod download &&
-  #           go test ./... &&
+  #           cd ${{ github.workspace }}Go/ &&
+  #           go test -p 1 -parallel 1 ./... &&
   #           go vet ./...
 
   # windows-amd64:
