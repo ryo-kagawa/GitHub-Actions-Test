@@ -185,13 +185,21 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        runner:
+          - ubuntu-22.04
+          - ubuntu-24.04
         target:
-          - image: debian:bookworm-slim
-            name: linux/386(Debian bookworm)
-          - image: debian:trixie-slim
-            name: linux/386(Debian trixie)
-    name: ${{ matrix.target.name }}
-    runs-on: ubuntu-latest
+          - image: debian:latest
+            name: linux/386 CGO_ENABLED=0(debian:latest)
+            cgo: 0
+          - image: debian:latest
+            name: linux/386 GNU C Library(debian:latest)
+            cgo: 1
+          - image: alpine:latest
+            name: linux/386 musl libc(alpine:latest)
+            cgo: 1
+    name: linux/386 ${{ matrix.target.name }}(${{ matrix.runner }})
+    runs-on: ${{ matrix.runner }}
     env:
       GOOS: linux
       GOARCH: 386
@@ -219,7 +227,7 @@ jobs:
             ${{ matrix.target.image }} \
             sh -c "
               export PATH=$PATH:/tmp/go/bin &&
-              ls -al &&
+              export CGO_ENABLED=${{ matrix.target.cgo }} &&
               go vet ./... &&
               go test ./... &&
               GO386=softfloat go test ./...
