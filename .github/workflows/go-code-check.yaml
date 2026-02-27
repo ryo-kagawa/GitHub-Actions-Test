@@ -240,12 +240,13 @@ jobs:
         runner:
           - ubuntu-22.04
           - ubuntu-24.04
+          - ubuntu-24.04-arm
         target:
           - image: debian:latest
-            name: linux/386 CGO_ENABLED=0(debian:latest)
+            name: linux/arm v5 CGO_ENABLED=0(debian:latest)
             cgo: 0
           - image: debian:latest
-            name: linux/arm v5(debian:latest)
+            name: linux/arm v5 GNU C Library(debian:latest)
             cgo: 1
     name: ${{ matrix.target.name }}(${{ matrix.runner }})
     runs-on: ${{ matrix.runner }}
