@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  GO_VERSION: 1.22.12
+  GO_VERSION: 1.23.12
 
 defaults:
   run:
@@ -472,10 +472,10 @@ jobs:
           - ubuntu-22.04
           - ubuntu-24.04
         target:
-          - image: debian:bookworm-slim
+          - image: mips64le:debian
             name: CGO_ENABLED=0
             cgo: 0
-          - image: debian:bookworm-slim
+          - image: mips64le:debian
             name: GNU C Library
             cgo: 1
     name: linux/mips64le ${{ matrix.target.name }}(${{ matrix.target.image }})(${{ matrix.runner }})
