@@ -17,11 +17,11 @@ jobs:
   #     matrix:
   #       target:
   #         # - runner: macos-14-large
-  #         #   name: darwin/arm64(macOS 14)
+  #         #   name: darwin/amd64(macOS 14)
   #         - runner: macos-15-intel
-  #           name: darwin/arm64(macOS 15)
+  #           name: darwin/amd64(macOS 15)
   #         # - runner: macos-26-large
-  #         #   name: darwin/arm64(macOS 26)
+  #         #   name: darwin/amd64(macOS 26)
   #   name: ${{ matrix.target.name }}
   #   runs-on: ${{ matrix.target.runner }}
   #   steps:
@@ -414,13 +414,13 @@ jobs:
           - ubuntu-22.04-arm
           - ubuntu-24.04-arm
         target:
-          - image: arm32v8/debian:latest
+          - image: arm64v8/debian:latest
             name: CGO_ENABLED=0
             cgo: 0
-          - image: arm32v8/debian:latest
+          - image: arm64v8/debian:latest
             name: GNU C Library
             cgo: 1
-          - image: arm32v8/alpine:latest
+          - image: arm64v8/alpine:latest
             name: GNU C Library
             cgo: 1
     name: linux/arm64 ${{ matrix.target.name }}(${{ matrix.target.image }})(${{ matrix.runner }})
@@ -475,7 +475,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     env:
       GOOS: linux
-      GOARCH: lmips64le
+      GOARCH: mips64le
       PLATFORM: linux/mips64le
     steps:
       - uses: actions/checkout@v6
