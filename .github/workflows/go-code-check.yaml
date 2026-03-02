@@ -509,7 +509,7 @@ jobs:
               export PATH=$PATH:/tmp/go/bin &&
               export CGO_ENABLED=${{ matrix.target.cgo }} &&
               go vet ./... &&
-              go test -p 1 -parallel 1 ./...
+              go test ./...
             "
 
   linux-ppc64le:
