@@ -230,7 +230,7 @@ jobs:
             name: GNU C Library
             cgo: 1
     name: linux/amd64 ${{ matrix.target.name }}(${{ matrix.target.image }})(${{ matrix.runner }})
-    runs-on: ${{ matrix.target.runner }}
+    runs-on: ${{ matrix.runner }}
     env:
       GOOS: linux
       GOARCH: amd64
