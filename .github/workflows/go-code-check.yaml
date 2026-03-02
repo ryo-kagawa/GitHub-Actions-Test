@@ -168,14 +168,14 @@ jobs:
           - ubuntu-22.04
           - ubuntu-24.04
         target:
-          - image: debian:latest
+          - image: i386/debian:latest
             name: CGO_ENABLED=0
             cgo: 0
-          - image: debian:latest
+          - image: i386/debian:latest
             name: GNU C Library
             cgo: 1
-          - image: alpine:latest
-            name: musl libc
+          - image: i386/alpine:latest
+            name: GNU C Library
             cgo: 1
     name: linux/386 ${{ matrix.target.name }}(${{ matrix.target.image }})(${{ matrix.runner }})
     runs-on: ${{ matrix.runner }}
@@ -220,17 +220,21 @@ jobs:
           - ubuntu-22.04
           - ubuntu-24.04
         target:
-          - image: debian:latest
+          - image: amd64/debian:latest
             name: CGO_ENABLED=0
             cgo: 0
-          - image: debian:latest
+          - image: amd64/debian:latest
             name: GNU C Library
             cgo: 1
-          - image: alpine:latest
-            name: musl libc
+          - image: amd64/alpine:latest
+            name: GNU C Library
             cgo: 1
     name: linux/amd64 ${{ matrix.target.name }}(${{ matrix.target.image }})(${{ matrix.runner }})
     runs-on: ${{ matrix.target.runner }}
+    env:
+      GOOS: linux
+      GOARCH: amd64
+      PLATFORM: linux/amd64
     steps:
       - uses: actions/checkout@v6
       - id: cache
@@ -303,6 +307,7 @@ jobs:
             sh -c "
               export PATH=$PATH:/tmp/go/bin &&
               export CGO_ENABLED=${{ matrix.target.cgo }} &&
+              export GOARM=5 &&
               go vet ./... &&
               go test ./...
             "
@@ -351,6 +356,7 @@ jobs:
             sh -c "
               export PATH=$PATH:/tmp/go/bin &&
               export CGO_ENABLED=${{ matrix.target.cgo }} &&
+              export GOARM=6 &&
               go vet ./... &&
               go test ./...
             "
@@ -402,6 +408,7 @@ jobs:
             sh -c "
               export PATH=$PATH:/tmp/go/bin &&
               export CGO_ENABLED=${{ matrix.target.cgo }} &&
+              export GOARM=7 &&
               go vet ./... &&
               go test ./...
             "
@@ -502,7 +509,7 @@ jobs:
               export PATH=$PATH:/tmp/go/bin &&
               export CGO_ENABLED=${{ matrix.target.cgo }} &&
               go vet ./... &&
-              go test ./...
+              go test -p 1 -parallel 1 ./...
             "
 
   linux-ppc64le:
