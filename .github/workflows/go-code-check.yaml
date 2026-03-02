@@ -244,7 +244,7 @@ jobs:
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}v6l.tar.gz | tar -xzf - -C /tmp
+          curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz | tar -xzf - -C /tmp
       - uses: docker/setup-qemu-action@v3
         with:
           platforms: ${{ env.PLATFORM }}
@@ -472,10 +472,10 @@ jobs:
           - ubuntu-22.04
           - ubuntu-24.04
         target:
-          - image: mips64le:debian
+          - image: mips64le/debian:latest
             name: CGO_ENABLED=0
             cgo: 0
-          - image: mips64le:debian
+          - image: mips64le/debian:latest
             name: GNU C Library
             cgo: 1
     name: linux/mips64le ${{ matrix.target.name }}(${{ matrix.target.image }})(${{ matrix.runner }})
