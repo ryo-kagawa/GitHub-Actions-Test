@@ -475,55 +475,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     env:
       GOOS: linux
-      GOARCH: lmips64le4
-      PLATFORM: linux/mips64le
-    steps:
-      - uses: actions/checkout@v6
-      - id: cache
-        uses: actions/cache@v5
-        with:
-          path: /tmp/go
-          key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
-      - if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}v6l.tar.gz | tar -xzf - -C /tmp
-      - uses: docker/setup-qemu-action@v3
-        with:
-          platforms: ${{ env.PLATFORM }}
-      - run: |
-          docker run \
-            --rm \
-            -v $(pwd):/workspace \
-            -v /tmp/go:/tmp/go \
-            -w /workspace \
-            --platform ${{ env.PLATFORM }} \
-            ${{ matrix.target.image }} \
-            sh -c "
-              export PATH=$PATH:/tmp/go/bin &&
-              export CGO_ENABLED=${{ matrix.target.cgo }} &&
-              go vet ./... &&
-              go test ./...
-            "
-
-  linux-mips64le:
-    strategy:
-      fail-fast: false
-      matrix:
-        runner:
-          - ubuntu-22.04
-          - ubuntu-24.04
-        target:
-          - image: mips64le/debian:latest
-            name: CGO_ENABLED=0
-            cgo: 0
-          - image: mips64le/debian:latest
-            name: GNU C Library
-            cgo: 1
-    name: linux/mips64le ${{ matrix.target.name }}(${{ matrix.target.image }})(${{ matrix.runner }})
-    runs-on: ${{ matrix.runner }}
-    env:
-      GOOS: linux
-      GOARCH: mips64le
+      GOARCH: lmips64le
       PLATFORM: linux/mips64le
     steps:
       - uses: actions/checkout@v6
