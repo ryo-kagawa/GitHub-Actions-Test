@@ -16,4 +16,4 @@ jobs:
           echo nest1 job1
   nest2:
     name: Nest2
-    uses: ./.github/workflows/nest2.yml
+    uses: ./.github/workflows/nest-ci-2.yml
