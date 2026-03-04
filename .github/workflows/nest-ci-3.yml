@@ -1,0 +1,14 @@
+name: Nest CI 3
+
+on:
+  workflow_call:
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    run: |
+      echo nest3 job1
+  job2:
+    runs-on: ubuntu-latest
+    run: |
+      echo nest3 job2

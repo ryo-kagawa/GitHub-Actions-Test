@@ -1,0 +1,17 @@
+name: Nest CI 2
+
+on:
+  workflow_call:
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    run: |
+      echo nest2 job1
+  job2:
+    runs-on: ubuntu-latest
+    run: |
+      echo nest2 job2
+  nest3:
+    name: Nest3
+    uses: ./.github/workflows/nest3.yml

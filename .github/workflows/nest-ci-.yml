@@ -1,0 +1,9 @@
+name: Nest CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  nest1:
+    name: Nest1
+    uses: ./.github/workflows/nest1.yml
