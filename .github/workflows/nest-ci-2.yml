@@ -6,12 +6,14 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
-    run: |
-      echo nest2 job1
+    steps:
+      - run: |
+          echo nest2 job1
   job2:
     runs-on: ubuntu-latest
-    run: |
-      echo nest2 job2
+    steps:
+      - run: |
+          echo nest2 job1
   nest3:
     name: Nest3
     uses: ./.github/workflows/nest3.yml

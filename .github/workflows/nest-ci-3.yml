@@ -6,9 +6,11 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
-    run: |
-      echo nest3 job1
+    steps:
+      - run: |
+          echo nest3 job1
   job2:
     runs-on: ubuntu-latest
-    run: |
-      echo nest3 job2
+    steps:
+      - run: |
+          echo nest3 job2
