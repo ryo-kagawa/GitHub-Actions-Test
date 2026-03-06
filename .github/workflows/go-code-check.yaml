@@ -15,7 +15,7 @@ jobs:
     outputs:
       go_version: ${{ steps.set.outputs.go_version }}
     runs-on: ubuntu-latest
-    stesp:
+    steps:
       - id: set
         run: |
           echo "go_version=${{ env.GO_VERSION }}" >> $GITHUB_OUTPUT
