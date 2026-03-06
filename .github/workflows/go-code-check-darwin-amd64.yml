@@ -10,16 +10,15 @@ on:
         required: true
         type: string
 
-env:
-  TARGET: |
-    {
-      "14": "macos-14-large",
-      "15": "macos-15-intel",
-      "26": "macos-26-large",
-    }
-
 jobs:
   darwin-amd64:
+    env:
+      TARGET: |
+        {
+          "14": "macos-14-large",
+          "15": "macos-15-intel",
+          "26": "macos-26-large",
+        }
     name: darwin/amd64(macOS ${{ inputs.os_version }})
     runs-on: ${{ fromJson(env.TARGET)[inputs.os_version] }}
     steps:
