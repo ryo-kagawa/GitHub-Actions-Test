@@ -12,7 +12,8 @@ defaults:
 
 jobs:
   prepare:
-    defaults: {}
+    defaults:
+      working-directory: .
     outputs:
       go_version: ${{ steps.set.outputs.go_version }}
     runs-on: ubuntu-latest
