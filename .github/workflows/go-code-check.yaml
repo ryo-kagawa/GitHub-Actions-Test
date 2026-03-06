@@ -31,7 +31,7 @@ jobs:
     name: darwin/amd64
     uses: ./.github/workflows/go-code-check-darwin-amd64.yml
     with:
-      go_version: ${{ needs.prepare.outputs.GO_VERSION }}
+      go_version: ${{ needs.prepare.outputs.go_version }}
       os_version: ${{ matrix.target.version }}
 
   darwin-arm64:
