@@ -30,6 +30,9 @@ env:
 
 jobs:
   prepare:
+    defaults:
+      run:
+        working-directory: .
     outputs:
       runner: ${{ steps.set.outputs.runner }}
     runs-on: ubuntu-latest
