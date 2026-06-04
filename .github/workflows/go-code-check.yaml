@@ -196,7 +196,7 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz | tar -xzf - -C /tmp
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ env.PLATFORM }}
       - run: |
@@ -248,7 +248,7 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz | tar -xzf - -C /tmp
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ env.PLATFORM }}
       - run: |
@@ -296,7 +296,7 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}v6l.tar.gz | tar -xzf - -C /tmp
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ env.PLATFORM }}
       - run: |
@@ -345,7 +345,7 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}v6l.tar.gz | tar -xzf - -C /tmp
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ env.PLATFORM }}
       - run: |
@@ -397,7 +397,7 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}v6l.tar.gz | tar -xzf - -C /tmp
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ env.PLATFORM }}
       - run: |
@@ -449,7 +449,7 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz | tar -xzf - -C /tmp
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ env.PLATFORM }}
       - run: |
@@ -497,7 +497,7 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz | tar -xzf - -C /tmp
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ env.PLATFORM }}
       - run: |
@@ -548,7 +548,7 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz | tar -xzf - -C /tmp
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ env.PLATFORM }}
       - run: |
@@ -599,7 +599,7 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz | tar -xzf - -C /tmp
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ env.PLATFORM }}
       - run: |
@@ -650,7 +650,7 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           curl --location https://go.dev/dl/go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}.tar.gz | tar -xzf - -C /tmp
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ env.PLATFORM }}
       - run: |
