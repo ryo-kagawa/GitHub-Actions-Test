@@ -86,7 +86,7 @@ jobs:
   #   steps:
   #     - uses: actions/checkout@v6
   #     - id: cache
-  #       uses: actions/cache@v5
+  #       uses: actions/cache@v6
   #       with:
   #         path: ${{ github.workspace }}/tmp/go
   #         key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
@@ -137,7 +137,7 @@ jobs:
   #   steps:
   #     - uses: actions/checkout@v6
   #     - id: cache
-  #       uses: actions/cache@v5
+  #       uses: actions/cache@v6
   #       with:
   #         path: ${{ github.workspace }}/tmp/go
   #         key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
@@ -189,7 +189,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - id: cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: /tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
@@ -241,7 +241,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - id: cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: /tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
@@ -289,7 +289,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - id: cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: /tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}v6l
@@ -338,7 +338,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - id: cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: /tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}v6l
@@ -390,7 +390,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - id: cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: /tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}v6l
@@ -442,7 +442,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - id: cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: /tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
@@ -490,7 +490,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - id: cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: /tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
@@ -541,7 +541,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - id: cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: /tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
@@ -592,7 +592,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - id: cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: /tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
@@ -643,7 +643,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - id: cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: /tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
@@ -683,7 +683,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - id: cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ${{ github.workspace }}/tmp/go
           key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
@@ -732,7 +732,7 @@ jobs:
   #   steps:
   #     - uses: actions/checkout@v6
   #     - id: cache
-  #       uses: actions/cache@v5
+  #       uses: actions/cache@v6
   #       with:
   #         path: ${{ github.workspace }}/tmp/go
   #         key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
@@ -780,7 +780,7 @@ jobs:
   #   steps:
   #     - uses: actions/checkout@v6
   #     - id: cache
-  #       uses: actions/cache@v5
+  #       uses: actions/cache@v6
   #       with:
   #         path: ${{ github.workspace }}/tmp/go
   #         key: go${{ env.GO_VERSION }}.${{ env.GOOS }}-${{ env.GOARCH }}
