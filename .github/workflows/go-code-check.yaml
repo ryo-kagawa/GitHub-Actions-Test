@@ -51,7 +51,7 @@ jobs:
     name: ${{ matrix.target.name }}
     runs-on: ${{ matrix.target.runner }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-go@v6
         with:
           go-version: ${{ env.GO_VERSION }}
@@ -84,7 +84,7 @@ jobs:
   #     GOOS: freebsd
   #     GOARCH: amd64
   #   steps:
-  #     - uses: actions/checkout@v6
+  #     - uses: actions/checkout@v7
   #     - id: cache
   #       uses: actions/cache@v5
   #       with:
@@ -135,7 +135,7 @@ jobs:
   #     GOOS: freebsd
   #     GOARCH: arm64
   #   steps:
-  #     - uses: actions/checkout@v6
+  #     - uses: actions/checkout@v7
   #     - id: cache
   #       uses: actions/cache@v5
   #       with:
@@ -187,7 +187,7 @@ jobs:
       GOARCH: 386
       PLATFORM: linux/386
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: cache
         uses: actions/cache@v5
         with:
@@ -239,7 +239,7 @@ jobs:
       GOARCH: amd64
       PLATFORM: linux/amd64
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: cache
         uses: actions/cache@v5
         with:
@@ -287,7 +287,7 @@ jobs:
       GOARCH: arm
       PLATFORM: linux/arm/v5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: cache
         uses: actions/cache@v5
         with:
@@ -336,7 +336,7 @@ jobs:
       GOARCH: arm
       PLATFORM: linux/arm/v6
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: cache
         uses: actions/cache@v5
         with:
@@ -388,7 +388,7 @@ jobs:
       GOARCH: arm
       PLATFORM: linux/arm/v7
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: cache
         uses: actions/cache@v5
         with:
@@ -440,7 +440,7 @@ jobs:
       GOARCH: arm64
       PLATFORM: linux/arm64/v8
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: cache
         uses: actions/cache@v5
         with:
@@ -488,7 +488,7 @@ jobs:
       GOARCH: mips64le
       PLATFORM: linux/mips64le
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: cache
         uses: actions/cache@v5
         with:
@@ -539,7 +539,7 @@ jobs:
       GOARCH: ppc64le
       PLATFORM: linux/ppc64le
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: cache
         uses: actions/cache@v5
         with:
@@ -590,7 +590,7 @@ jobs:
       GOARCH: riscv64
       PLATFORM: linux/riscv64
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: cache
         uses: actions/cache@v5
         with:
@@ -641,7 +641,7 @@ jobs:
       GOARCH: s390x
       PLATFORM: linux/s390x
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: cache
         uses: actions/cache@v5
         with:
@@ -681,7 +681,7 @@ jobs:
       GOOS: netbsd
       GOARCH: arm64
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: cache
         uses: actions/cache@v5
         with:
@@ -730,7 +730,7 @@ jobs:
   #     GOOS: openbsd
   #     GOARCH: amd64
   #   steps:
-  #     - uses: actions/checkout@v6
+  #     - uses: actions/checkout@v7
   #     - id: cache
   #       uses: actions/cache@v5
   #       with:
@@ -778,7 +778,7 @@ jobs:
   #     GOOS: openbsd
   #     GOARCH: arm64
   #   steps:
-  #     - uses: actions/checkout@v6
+  #     - uses: actions/checkout@v7
   #     - id: cache
   #       uses: actions/cache@v5
   #       with:
@@ -818,7 +818,7 @@ jobs:
   #   name: ${{ matrix.target.name }}
   #   runs-on: ${{ matrix.target.runner }}
   #   steps:
-  #     - uses: actions/checkout@v6
+  #     - uses: actions/checkout@v7
   #     - uses: actions/setup-go@v6
   #       with:
   #         go-version: ${{ env.GO_VERSION }}
@@ -831,7 +831,7 @@ jobs:
   #   name: windows/arm64(Windows 11)
   #   runs-on: windows-11-arm
   #   steps:
-  #     - uses: actions/checkout@v6
+  #     - uses: actions/checkout@v7
   #     - uses: actions/setup-go@v6
   #       with:
   #         go-version: ${{ env.GO_VERSION }}
